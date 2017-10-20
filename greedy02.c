@@ -22,9 +22,48 @@
 // 2
 
 #include <stdio.h>
+#include <stdlib.h>
+
+typedef struct 
+{
+    int start;
+    int end;
+} time_pair;
+
+int compar_time_pair(const void *a, const void *b)
+{
+    return ((time_pair *)a)->end - ((time_pair *)b)->end;
+}
 
 int main(int argc, char *argv[])
 {
+    unsigned int N; 
+    time_pair *S;
+    int i;
+    int count = 0;
+    int current_end_time = -1000000000;
+
+    scanf("%u", &N);
+    S = (time_pair *)calloc(N, sizeof(time_pair));
+
+    for (i=0;i<N;i++)
+    {
+        scanf("%d%d",&((S+i)->start),&((S+i)->end));
+    }
+
+    qsort(S, N, sizeof(time_pair), compar_time_pair);
     
+    for (i=0;i<N;i++)
+    {
+        if(S[i].start >= current_end_time)
+        {
+            current_end_time = S[i].end;
+            count++;
+        }
+    }
+
+    printf("%d\n", count);
+
+    free(S);
     return 0;
 }
