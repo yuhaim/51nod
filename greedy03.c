@@ -32,6 +32,9 @@ typedef struct
 
 int compar_time_point(const void *a, const void *b)
 {
+    if(((time_point *)a)->time_value == ((time_point *)b)->time_value) {
+        return ((time_point *)b)->time_attr - ((time_point *)a)->time_attr;
+    }
     return ((time_point *)a)->time_value - ((time_point *)b)->time_value;
 }
 
